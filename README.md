@@ -47,7 +47,7 @@ CATATAN: Homepage dijaga oleh auth guard, jadi kalau belum login user tidak bisa
 
 ==================  SORTING TANPA SEARCH ================== 
 1. Bapak/ibu bisa sorting semua data berdasarkan ascending descending
-    sekadar catatan : data yang di sorting itu data global, jadi bukan data sesuai page. Ketika bapak ibu sorting full name secara ascending, maka yang muncul pertama adalah "ada lovelace" dan diurutan terakhir "Zoe Alexandra" begitu juga sebaliknya.
+    sekadar catatan : data yang di sorting itu data global, jadi bukan data sesuai page. Ketika bapak ibu sorting full name secara ascending, maka yang muncul pertama adalah "Ada Lovelace" dan diurutan terakhir "Zoe Alexandra" begitu juga sebaliknya.
 
 2. Ketika bapak/ibu klik list tabel, maka akan masuk ke detail page, ketika klik button OK di detail page, maka akan kembali ke halaman terakhir dihomepage sesuai sorting dan page ke berapa
 
@@ -58,6 +58,13 @@ CATATAN: Homepage dijaga oleh auth guard, jadi kalau belum login user tidak bisa
 3. Ketika bapak/ibu klik list tabel, maka akan masuk ke detail page, ketika klik button OK di detail page, maka akan kembali ke halaman terakhir dihomepage sesuai search, sorting dan page ke berapa
 
 
+==================  ADD / EDIT EMPLOYEE ================== 
 
+1. Add dan edit menggunakan satu page yang sama (reusable). pembeda adalah ketika ada param id atau tidak. 
+
+
+Terima kasih telah membaca dokumentasi ini bapak/ibu. Saya sangat berterimakasih apa bila bapak/ibu mencoba semua fitur yang ada di project ini. Bila ada masukan dan saran saya sangat menerima dengan senang hati boleh melalui github ataupun email ke bennysetiady111@gmail.com.
+
+TERIMA KASIH / HORAS 
 
 
