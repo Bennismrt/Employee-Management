@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, skip } from 'rxjs';
 import { Employee } from 'src/app/_model/app.model';
 import { BankDataEmployeeService } from 'src/app/_service/app.service';
 import Swal from 'sweetalert2';
@@ -29,7 +30,8 @@ export class AddEditComponent implements OnInit{
     employeeForm!: FormGroup;
     today: string = new Date().toISOString().split('T')[0];
     
-    groupLists = ['HR', 'Software Development', 'Customer Service', 'Technical Support', 'Sales', 'Public Relations', 'Finance', 'UI/UX Design', 'DevOps', 'Network Engineering',]
+    groupLists = ['HR', 'Software Development', 'Customer Service', 'Technical Support', 'Sales', 'Public Relations', 'Finance', 'UI/UX Design', 'DevOps', 'Network Engineering'];
+    searchGroup = new FormControl('');
 
     constructor(
         private service: BankDataEmployeeService,
@@ -42,24 +44,34 @@ export class AddEditComponent implements OnInit{
         this.employeeId = this.route.snapshot.paramMap.get('id')!!;
         if(this.employeeId){
             this.status = 'edit'
-            this.detailEmployee = this.service.getDetailEmployees(this.employeeId) as Employee
+            let data = this.service.getDetailEmployees(this.employeeId) ? this.service.getDetailEmployees(this.employeeId) : this.detailEmployee;
+            this.detailEmployee = data as Employee
+            if(this.detailEmployee.firstName === undefined) this.status = 'add';
         }else{
             this.status = 'add';
         }
         this.initForm();
     }
 
+    initSearchGroup(){
+        this.searchGroup.valueChanges.pipe(debounceTime(200),distinctUntilChanged(),skip(1)).subscribe(value => {
+            if(value !== undefined && value !== null && value !== ''){
+
+            }
+        })
+    }
+
     initForm(){
         this.employeeForm = this.fb.group({
-            username: [this.detailEmployee && this.detailEmployee?.username === '' ? '' : this.detailEmployee?.username, [Validators.required]],
-            firstName: [this.detailEmployee && this.detailEmployee?.firstName === '' ? '' : this.detailEmployee?.firstName, [Validators.required]],
-            lastName: [this.detailEmployee && this.detailEmployee?.lastName === '' ? '' : this.detailEmployee?.lastName, [Validators.required]],
-            email: [this.detailEmployee && this.detailEmployee?.email === '' ? '' : this.detailEmployee?.email, [Validators.required, Validators.email]],
-            birthDate: [this.detailEmployee && this.detailEmployee?.birthDate.toString() === '' ? '' : new Date(this.detailEmployee!.birthDate), [Validators.required]],
-            basicSalary: [this.detailEmployee && this.detailEmployee?.basicSalary === 0 ? 0 : this.formatCurrency(this.detailEmployee?.basicSalary!), [Validators.required, Validators.min(1)]],
-            status: [this.detailEmployee && this.detailEmployee?.status === '' ? '' : this.detailEmployee?.status, [Validators.required]],
-            group: [this.detailEmployee && this.detailEmployee?.group === '' ? '' : this.detailEmployee?.group, [Validators.required]],
-            description: [this.detailEmployee && this.detailEmployee?.description === '' ? '' : this.detailEmployee?.description, [Validators.required]],
+            username: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.username === '' ? '' : this.detailEmployee?.username, [Validators.required]],
+            firstName: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.firstName === '' ? '' : this.detailEmployee?.firstName, [Validators.required]],
+            lastName: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.lastName === '' ? '' : this.detailEmployee?.lastName, [Validators.required]],
+            email: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.email === '' ? '' : this.detailEmployee?.email, [Validators.required, Validators.email]],
+            birthDate: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.birthDate.toString() === '' ? '' : new Date(this.detailEmployee!.birthDate), [Validators.required]],
+            basicSalary: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.basicSalary === 0 ? 0 : this.formatCurrency(this.detailEmployee?.basicSalary!), [Validators.required, Validators.min(1)]],
+            status: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.status === '' ? '' : this.detailEmployee?.status, [Validators.required]],
+            group: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.group === '' ? '' : this.detailEmployee?.group, [Validators.required]],
+            description: [this.status === 'add' && this.detailEmployee && this.detailEmployee?.description === '' ? '' : this.detailEmployee?.description, [Validators.required]],
         });
     }
 
@@ -96,5 +108,9 @@ export class AddEditComponent implements OnInit{
             icon: icon as any,
             confirmButtonText: 'OK'
         });
+    }
+
+    executeResult(){
+        return this.groupLists.filter((res) => res.toLowerCase().trim().includes(this.searchGroup.value ? this.searchGroup.value.toLowerCase().trim() : ''))
     }
 }

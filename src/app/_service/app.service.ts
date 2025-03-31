@@ -55,9 +55,6 @@ export class BankDataEmployeeService {
   verifyLogin(account: registerAccount){
     const user = this.registeredAccount.find(user => user.email === account.email);
 
-    console.log('user', user);
-    
-    
     if (!user) {
       return false;
     }
@@ -73,8 +70,6 @@ export class BankDataEmployeeService {
 
   // Check username and email for verify register
   verifyRegister(account: registerAccount){
-    console.log('account', account);
-    
     const userName = this.registeredAccount.find(user => user.username === account.username);
     const email = this.registeredAccount.find(user => user.email === account.email);
     

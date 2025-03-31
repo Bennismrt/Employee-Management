@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -36,6 +36,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
     MatFormFieldModule, 
     MatInputModule,
     MatSelectModule,

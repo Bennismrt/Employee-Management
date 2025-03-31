@@ -86,7 +86,8 @@
                     <mat-form-field class="w-full">
                         <mat-label class="b4-400">Group</mat-label>
                         <mat-select class="w-full b5-400" placeholder="Select Group" formControlName="group">
-                            <mat-option class="b5-400" *ngFor="let group of groupLists" [value]="group">
+                            <input [formControl]="searchGroup" class="w-full px-4 py-2 b5-400" placeholder="Search group">
+                            <mat-option class="b5-400" *ngFor="let group of searchGroup.value ? executeResult() : groupLists" [value]="group">
                                 {{ group }}
                             </mat-option>
                         </mat-select>
