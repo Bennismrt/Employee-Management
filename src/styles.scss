@@ -1,0 +1,172 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+
+:disabled {
+  background-color: #a4a4a4;
+}
+
+.b1-400{
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'Poppins';
+}
+.b1-500{
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Poppins';
+}
+.b1-600{
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
+.b1-700{
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Poppins';
+}
+.b1-800{
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Poppins';
+  }
+  
+  .b2-400{
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'Poppins';
+}
+.b2-500{
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Poppins';
+}
+.b2-600{
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
+.b2-700{
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Poppins';
+}
+.b2-800{
+    font-size: 18px;
+    font-weight: 800;
+    font-family: 'Poppins';
+  }
+  
+  .b3-400{
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Poppins';
+}
+.b3-500{
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Poppins';
+}
+.b3-600{
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
+.b3-700{
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Poppins';
+}
+.b3-800{
+    font-size: 16px;
+    font-weight: 800;
+    font-family: 'Poppins';
+  }
+  
+  .b4-400{
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Poppins';
+}
+.b4-500{
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Poppins';
+}
+.b4-600{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
+.b4-700{
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Poppins';
+}
+.b4-800{
+    font-size: 14px;
+    font-weight: 800;
+    font-family: 'Poppins';
+}
+  
+.b5-400{
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Poppins';
+}
+.b5-500{
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Poppins';
+}
+.b5-600{
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
+.b5-700{
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Poppins';
+  }
+.b5-800{
+    font-size: 12px;
+    font-weight: 800;
+    font-family: 'Poppins';
+}
+.b6-400{
+    font-size: 10px;
+    font-weight: 400;
+    font-family: 'Poppins';
+}
+.b6-500{
+    font-size: 10px;
+    font-weight: 500;
+    font-family: 'Poppins';
+}
+.b6-600{
+    font-size: 10px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
+.b6-700{
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'Poppins';
+  }
+.b6-800{
+    font-size: 10px;
+    font-weight: 800;
+    font-family: 'Poppins';
+}
+  

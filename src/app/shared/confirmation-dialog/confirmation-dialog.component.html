@@ -1,0 +1,13 @@
+<section class="w-96 px-4 space-y-4">
+    <section class="w-full flex flex-col space-y-2">
+        <p class="w-full b3-600 text-center">{{data.title}}</p>
+        <p class="w-full b5-400 text-center">{{data.sub_title}}</p>
+    </section>
+    <div class="w-full flex items-center justify-center">
+        <img class="w-20" [src]="data.image" [alt]="data.title">
+    </div>
+    <div class="w-full flex flex-row space-x-4">
+        <button class="py-2 px-4 w-full rounded-md bg-red-500 hover:bg-red-600 text-white b5-400" (click)="confirmDialog('cancel')">{{data.cancel}}</button>
+        <button class="py-2 px-4 w-full rounded-md bg-green-500 hover:bg-green-600 text-white b5-400" (click)="confirmDialog('confirm')">{{data.confirm}}</button>
+    </div>
+</section>

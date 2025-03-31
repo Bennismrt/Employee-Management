@@ -1,0 +1,16 @@
+
+<section class="w-full flex flex-row items-center p-4 bg-blue-400 px-4 md:px-6">
+    <div class="w-full flex flex-row justify-between space-x-2 items-center max-w-7xl mx-auto">
+        <div [routerLink]="'/'" class="cursor-pointer flex flex-row items-center space-x-2">
+            <img class="w-10" src="assets/logo.png" alt="logo">
+            <p class="md:text-[20px] md:font-semibold md:font-['Poppins'] text-[12px] font-semibold font-['Poppins'] text-white">EMPLOYEE MANAGEMENT</p>
+        </div>
+        <div class="flex flex-row items-center space-x-4">
+            <p class="hidden md:flex b4-400 text-white">{{messageGreeting}}</p>
+            <button (click)="onLogout()" class="w-fit py-1.5 px-3 rounded-md flex flex-row space-x-2 bg-red-500 hover:bg-red-600">
+                <img class="w-4 rotate-180" src="assets/icons/icon-logout.svg" alt="logout">
+                <p class="text-white b5-400">Logout</p>
+            </button>
+        </div>
+    </div>        
+</section>

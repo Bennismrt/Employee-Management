@@ -1,0 +1,89 @@
+<main class="w-full h-screen flex flex-col justify-center md:justify-start space-y-6 items-center p-6 bg-gradient-to-br from-blue-400 via-purple-500 to-blue-500 backdrop-blur-xl">
+    <section class="w-full flex flex-row items-center justify-center md:justify-start space-x-2">
+        <img class="w-10" src="assets/logo.png" alt="logo">
+        <p class="b1-600 text-white">EMPLOYEE MANAGEMENT</p>
+    </section>
+    <section class="w-full h-auto md:h-full flex flex-row items-center justify-center">
+        <div class="shadow-xl md:w-96 w-full rounded-md bg-white p-4 flex flex-col space-y-4">
+            <section class="flex flex-col space-y-2">
+                <p class="text-[30px] font-semibold font-['Poppins']">Sign Up</p>
+                <p class="b5-400">{{messageGreeting}}</p>
+            </section>
+            <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="w-full flex flex-col space-y-4 pt-6">
+                <section class="w-full flex flex-col">
+                    <div class="w-full border-2 rounded-md flex flex-row px-2">
+                        <img class="w-4" src="assets/icons/icon-person.svg" alt="username">
+                        <input autocomplete="username"  formControlName="username" type="text" class="bg-transparent xl:w-56 w-full outline-none b5-400 pr-4 pl-2 py-3" placeholder="eg: bennisimarmata">
+                    </div>
+                    <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+                        <small class="b6-400 text-red-600" *ngIf="registerForm.get('username')?.errors?.['required']">username is required</small>
+                    </div>
+                </section>
+                <section class="w-full flex flex-col">
+                    <div class="w-full border-2 rounded-md flex flex-row px-2">
+                        <img class="w-4" src="assets/icons/icon-email-black.svg" alt="email">
+                        <input autocomplete="email"  formControlName="email" type="text" class="bg-transparent xl:w-56 w-full outline-none b5-400 pr-4 pl-2 py-3" placeholder="eg: benni@sample.com">
+                    </div>
+                    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                        <small class="b6-400 text-red-600" *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</small>
+                        <small class="b6-400 text-red-600" *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</small>
+                    </div>
+                </section>
+                <section class="w-full flex flex-col">
+                    <div class="w-full border-2 rounded-md flex flex-row items-center px-2">
+                        <div class="w-full flex flex-row items-center">
+                            <img class="w-4" src="assets/icons/icon-password-black.svg" alt="password">
+                            <input  autocomplete="password" formControlName="password" [type]="isShowPassword ? 'text' : 'password'" class="bg-transparent xl:w-56 w-full outline-none b5-400 pr-4 pl-2 py-3" placeholder="Password">
+                        </div>
+                        <p class="text-blue-500 b6-400 cursor-pointer" (click)="isShowPassword = !isShowPassword">{{isShowPassword ? 'hide' : 'show'}}</p>
+                    </div>
+                    <div *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)">
+                        <small class="b6-400 text-red-600" *ngIf="registerForm.get('password')?.errors?.['required'];else errorChars">Password is required</small>
+                        <ng-template #errorChars>
+                            <small class="b6-400 text-red-600" *ngIf="registerForm.get('password')?.errors?.['minlength']; else errorPattern">
+                              Password must be at least 6 characters
+                            </small>
+                        </ng-template>
+                        <ng-template #errorPattern>
+                            <small class="b6-400 text-red-600" *ngIf="registerForm.get('password')?.errors?.['pattern'];">
+                              Password must contain at least one number
+                            </small>
+                        </ng-template>
+                    </div>
+                </section>
+
+                <section class="w-full flex flex-col">
+                    <div class="w-full border-2 rounded-md flex flex-row items-center px-2">
+                        <div class="w-full flex flex-row items-center">
+                            <img class="w-4" src="assets/icons/icon-password-black.svg" alt="password">
+                            <input  autocomplete="confirmationPassword" formControlName="confirmationPassword" [type]="isShowPassword ? 'text' : 'password'" class="bg-transparent xl:w-56 w-full outline-none b5-400 pr-4 pl-2 py-3" placeholder="Confirmation Password">
+                        </div>
+                        <p class="text-blue-500 b6-400 cursor-pointer" (click)="isShowPassword = !isShowPassword">{{isShowPassword ? 'hide' : 'show'}}</p>
+                    </div>
+                    <div *ngIf="registerForm.get('confirmationPassword')!.invalid && (registerForm.get('confirmationPassword')!.dirty || registerForm.get('confirmationPassword')!.touched)">
+                        <small class="b6-400 text-red-600" *ngIf="registerForm.get('confirmationPassword')?.errors?.['required'];else errorChars">Confirmation Password is required</small>
+                        <ng-template #errorChars>
+                            <small class="b6-400 text-red-600" *ngIf="registerForm.get('confirmationPassword')?.errors?.['minlength']; else errorPattern">
+                                Confirmation Password must be at least 6 characters
+                            </small>
+                        </ng-template>
+                        <ng-template #errorPattern>
+                            <small class="b6-400 text-red-600" *ngIf="registerForm.get('confirmationPassword')?.errors?.['pattern']; else errorMatchPass">
+                                Confirmation Password must contain at least one number
+                            </small>
+                        </ng-template>
+                        <ng-template #errorMatchPass>
+                            <small class="b6-400 text-red-600" *ngIf="registerForm.get('confirmationPassword')?.errors?.['confirmedValidator']">
+                                Password and Confirmation Password do not match.
+                            </small>
+                        </ng-template>
+                    </div>
+                </section>
+                <button [disabled]="registerForm.invalid" class="py-2 w-full bg-blue-600 text-white b4-500 rounded-full">Register</button>
+                <div class="w-full flex justify-end pt-6">
+                    <p class="b5-400">Already have an employee account? <span class="text-blue-600 b5-600 cursor-pointer" routerLink="/auth/login">Sign In</span></p>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>

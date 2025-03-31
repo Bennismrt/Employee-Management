@@ -1,0 +1,79 @@
+<main class="w-full flex flex-col space-y-6 h-screen relative max-w-full overflow-x-hidden">
+    <app-headers class="sticky top-0 z-10"></app-headers>
+    <section class="w-full h-full flex flex-col space-y-4 px-4 md:px-6 xl:px-0 max-w-7xl mx-auto">
+        <div class="w-full flex flex-col space-y-1 p-4 rounded-md shadow-md">
+            <p class="b3-400">Welcome to Dashboard</p>
+            <p class="w-full b5-400">This dashboard streamlines the management of employee reports, making it easier for HR and managers to track, update, and analyze workforce data efficiently and accurately</p>
+        </div>
+        <div class="flex-1 w-full h-full flex flex-col space-y-4 shadow-md p-4">
+            <section class="w-full bg-white flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center md:justify-between">
+                <p class="b1-600 text-blue-600">Employee List</p>
+                <section class="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-4 md:items-center">
+                    <input [(ngModel)]="employeeName" (keyup)="openSearch()" type="text" class="bg-transparent backdrop-blur-xl border-2 border-blue-400 shadow-md outline-none b5-400 transition-all duration-300 min-w-0 focus:min-w-56 rounded-md px-4 py-2" placeholder="Search employee name">
+                    <input [(ngModel)]="employeeStatus" (keyup)="openSearch()" type="text" min="0" class="bg-transparent backdrop-blur-xl border-2 border-blue-400 shadow-md outline-none b5-400 transition-all duration-300 min-w-0 focus:min-w-56 rounded-md px-4 py-2" placeholder="Search employee status">
+                    <button (click)="onOpenDialogAddEmployee()" class="py-2 px-4 bg-green-500 text-white b5-400 border-2 border-green-500 h-full rounded-md">+ Add Employee</button>
+                </section>
+            </section>
+            <section class="w-full h-full flex flex-col flex-1">
+                <div class="w-full max-w-full overflow-x-auto lg:overflow-x-visible flex flex-row">
+                    <table class="w-full max-w-full min-w-[1300px] lg:min-w-full lg:overflow-x-hidden overflow-x-auto table-fixed">
+                        <thead>
+                            <tr class="bg-blue-400">
+                                <th class="b4-500 w-[5%] max-w-[5%] min-w-[5%] text-white text-start px-2 py-4 cursor-pointer overflow-hidden text-ellipsis whitespace-normal" (click)="sortData('position')">No {{ sortType === 'position' ? '⬆️' :'⬇️' }}</th>
+                                <th class="b4-500 w-[10%] max-w-[10%] min-w-[10%] text-white text-start px-2 py-4 cursor-pointer overflow-hidden text-ellipsis whitespace-normal" (click)="sortData('firstName')">Full Name {{ sortType === 'firstName' ? '⬆️' : '⬇️' }}</th>
+                                <th class="b4-500 w-[13%] max-w-[13%] min-w-[13%] text-white text-start px-2 py-4 cursor-pointer overflow-hidden text-ellipsis whitespace-normal" (click)="sortData('email')">Email {{ sortType === 'email' ? '⬆️' : '⬇️' }}</th>
+                                <th class="b4-500 w-[10%] max-w-[10%] min-w-[10%] text-white text-start px-2 py-4 cursor-pointer overflow-hidden text-ellipsis whitespace-normal" (click)="sortData('birthDate')">Birth Date {{ sortType === 'birthDate' ? '⬆️' : '⬇️' }}</th>
+                                <th class="b4-500 w-[12%] max-w-[12%] min-w-[12%] text-white text-start px-2 py-4 cursor-pointer overflow-hidden text-ellipsis whitespace-normal" (click)="sortData('basicSalary')">Basic Salary {{ sortType === 'basicSalary' ? '⬆️' : '⬇️' }}</th>
+                                <th class="b4-500 w-[10%] max-w-[10%] min-w-[10%] text-white text-start px-2 py-4 cursor-pointer overflow-hidden text-ellipsis whitespace-normal" (click)="sortData('status')">Status {{ sortType === 'status' ? '⬆️' : '⬇️' }}</th>
+                                <th class="b4-500 w-[10%] max-w-[10%] min-w-[10%] text-white text-start px-2 py-4 cursor-pointer overflow-hidden text-ellipsis whitespace-normal" (click)="sortData('group')">Group {{ sortType === 'group' ? '⬆️' : '⬇️' }}</th>
+                                <th class="b4-500 w-[20%] max-w-[20%] min-w-[20%] text-white text-start px-2 py-4 cursor-pointer overflow-hidden text-ellipsis whitespace-normal" (click)="sortData('description')">Description {{ sortType === 'description' ? '⬆️' : '⬇️' }}</th>
+                                <th class="b4-500 w-[10%] max-w-[10%] min-w-[10%] text-white text-start px-2 py-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="h-full">
+                            <ng-container *ngIf="listEmployees.length > 0; else emptyListEmployee">
+                                <tr *ngFor="let emp of listEmployees; let i = index; trackBy: trackByIndex" [ngClass]="i % 2 == 0 ? 'bg-white' : 'bg-gray-200'" class="cursor-pointer" (click)="goToDetailPage(emp)">
+                                  <td class="b5-400 overflow-hidden text-ellipsis whitespace-normal break-words p-2 w-[5%] max-w-[5%] min-w-[5%]">{{emp.position}}</td>
+                                  <td class="b5-400 overflow-hidden text-ellipsis whitespace-normal break-words p-2 w-[10%] max-w-[10%] min-w-[10%] capitalize">{{emp.firstName}} {{emp.lastName}}</td>
+                                  <td class="b5-400 overflow-hidden text-ellipsis whitespace-normal break-words p-2 w-[13%] max-w-[13%] min-w-[13%]">{{emp.email}}</td>
+                                  <td class="b5-400 overflow-hidden text-ellipsis whitespace-normal break-words p-2 w-[10%] max-w-[10%] min-w-[10%]">{{emp.birthDate | date: 'dd MMMM, yyyy'}}</td>
+                                  <td class="b5-400 overflow-hidden text-ellipsis whitespace-normal break-words p-2 w-[12%] max-w-[12%] min-w-[12%]">{{emp.basicSalary | rupiah}}</td>
+                                  <td class="b5-400 overflow-hidden text-ellipsis whitespace-normal break-words p-2 w-[10%] max-w-[10%] min-w-[10%]">{{emp.status}}</td>
+                                  <td class="b5-400 overflow-hidden text-ellipsis whitespace-normal break-words p-2 w-[10%] max-w-[10%] min-w-[10%]">{{emp.group}}</td>
+                                  <td class="b5-400 overflow-hidden text-ellipsis whitespace-normal break-words p-2 w-[20%] max-w-[20%] min-w-[20%]">{{emp.description}}</td>
+                                  <td class="h-full text-center w-[10%] max-w-[10%] min-w-[10%]">
+                                      <div class="flex flex-row space-x-2 justify-center items-center px-2">
+                                          <button (click)="onEditEmployee(emp); $event.stopPropagation()" class="px-3 py-1 b5-400 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md">Edit</button>
+                                          <button (click)="onOpenDialogDeleteEmployee(emp); $event.stopPropagation()" class="px-3 py-1 b5-400 bg-red-500 hover:bg-red-600 text-white rounded-md">Delete</button>
+                                      </div>
+                                  </td>
+                                </tr>
+                            </ng-container>
+                            <ng-template #emptyListEmployee>
+                                <tr>
+                                    <td colspan="9">
+                                        <section class="w-full flex flex-col space-y-4 py-10 items-center justify-center">
+                                            <img class="w-56" src="assets/empty-data.png" alt="empty">
+                                            <p class="b1-500 text-yellow-500">No data found!</p>
+                                            <div class="w-full flex flex-col items-center justify-center space-y-2">
+                                                <p class="b3-400 text-center">Sorry, we couldn't find any matches</p>
+                                                <p class="b5-400">Please try with another keywords or filters. Thank you 😊</p>
+                                            </div>
+                                        </section>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+                <mat-paginator
+                    [length]="totalPage"
+                    [pageSize]="pageSize"
+                    [pageIndex]="currentPage"
+                    [pageSizeOptions]="[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200]"
+                    (page)="onPageChange($event)">
+                </mat-paginator>
+            </section>
+        </div>
+    </section>
+</main>

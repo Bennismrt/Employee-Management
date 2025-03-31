@@ -1,0 +1,48 @@
+<main class="w-full h-screen flex flex-col justify-center md:justify-start space-y-6 items-center p-6 bg-gradient-to-br from-blue-400 via-purple-500 to-blue-500 backdrop-blur-xl">
+    <section class="w-full flex flex-row items-center justify-center md:justify-start space-x-2">
+        <img class="w-10" src="assets/logo.png" alt="logo">
+        <p class="b1-600 text-white">EMPLOYEE MANAGEMENT</p>
+    </section>
+    <section class="w-full h-auto md:h-full flex flex-row items-center justify-center">
+        <div class="shadow-xl md:w-96 w-full rounded-md bg-white p-4 flex flex-col space-y-4">
+            <section class="flex flex-col space-y-2">
+                <p class="text-[30px] font-semibold font-['Poppins']">Sign In</p>
+                <p class="b5-400">{{messageGreeting}}</p>
+            </section>
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="w-full flex flex-col space-y-4 pt-6">
+                <section class="w-full flex flex-col">
+                    <div class="w-full border-2 rounded-md flex flex-row px-2">
+                        <img class="w-4" src="assets/icons/icon-email-black.svg" alt="email">
+                        <input formControlName="email" type="text" class="bg-transparent xl:w-56 w-full outline-none b5-400 pr-4 pl-2 py-3" placeholder="eg: benni@sample.com">
+                    </div>
+                    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                        <small class="b6-400 text-red-600" *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</small>
+                        <small class="b6-400 text-red-600" *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</small>
+                    </div>
+                </section>
+                <section class="w-full flex flex-col">
+                    <div class="w-full border-2 rounded-md flex flex-row items-center px-2">
+                        <div class="w-full flex flex-row items-center">
+                            <img class="w-4" src="assets/icons/icon-password-black.svg" alt="password">
+                            <input formControlName="password" [type]="isShowPassword ? 'text' : 'password'" class="bg-transparent xl:w-56 w-full outline-none b5-400 pr-4 pl-2 py-3" placeholder="ben*******">
+                        </div>
+                        <p class="text-blue-500 b6-400 cursor-pointer" (click)="isShowPassword = !isShowPassword">{{isShowPassword ? 'hide' : 'show'}}</p>
+                    </div>
+                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                        <small class="b6-400 text-red-600" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</small>
+                        <small class="b6-400 text-red-600" *ngIf="loginForm.get('password')?.errors?.['minlength']">
+                          Password must be at least 6 characters
+                        </small>
+                        <small class="b6-400 text-red-600" *ngIf="loginForm.get('password')?.errors?.['pattern']">
+                          Password must contain at least one number
+                        </small>
+                    </div>
+                </section>
+                <button [disabled]="loginForm.invalid" class="py-2 w-full bg-blue-600 text-white b4-500 rounded-full">Login</button>
+                <div class="w-full flex justify-end pt-6">
+                    <p class="b5-400">New Employee? <span class="text-blue-600 b5-600 cursor-pointer" routerLink="/auth/register">Sign Up</span></p>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>

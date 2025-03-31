@@ -1,0 +1,118 @@
+<div class="w-full flex flex-col space-y-8">
+    <app-headers></app-headers>
+    <section class="w-full max-w-[50%] mx-auto bg-white shadow-md p-4 space-y-4 h-full overflow-y-auto overflow-x-hidden relative">
+        <div class="w-full flex flex-col space-y-4">
+            <section class="w-full flex flex-col space-y-2">
+                <p class="w-full b3-600 text-green-600 text-center">Add New Employee</p>
+                <p class="w-full b5-400 text-center">To add a new employee, please fill out the form below.</p>
+            </section>
+            <form [formGroup]="employeeForm" class="w-full flex flex-col h-full" (ngSubmit)="submitForm()">
+                <div class="w-full">
+                    <mat-form-field class="w-full">
+                        <mat-label class="b4-400">Username</mat-label>
+                        <input class="w-full b5-400" type="text" matInput placeholder="Ex. benni"
+                               formControlName="username">
+                        <mat-error *ngIf="employeeForm.controls['username'].invalid && employeeForm.controls['username'].touched">
+                            Username is <strong>required</strong>.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="w-full flex flex-row space-x-6">
+                    <mat-form-field class="w-[46%]">
+                        <mat-label class="b4-400">First Name</mat-label>
+                        <input class="w-full b5-400" type="text" matInput placeholder="Ex. Benni"
+                               formControlName="firstName">
+                        <mat-error *ngIf="employeeForm.controls['firstName'].invalid && employeeForm.controls['firstName'].touched">
+                            First Name is <strong>required</strong>.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-[46%]">
+                        <mat-label class="b4-400">Last Name</mat-label>
+                        <input class="w-full b5-400" type="text" matInput placeholder="Ex. Simarmata"
+                               formControlName="lastName">
+                        <mat-error *ngIf="employeeForm.controls['lastName'].invalid && employeeForm.controls['lastName'].touched">
+                            Last Name is <strong>required</strong>.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput formControlName="email" placeholder="Ex. benni@sample.com">
+                        
+                        <mat-error *ngIf="employeeForm.controls['email'].hasError('email') && !employeeForm.controls['email'].hasError('required')">
+                            Please enter a valid email address
+                        </mat-error>
+                        
+                        <mat-error *ngIf="employeeForm.controls['email'].hasError('required')">
+                            Email is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full">
+                        <mat-label class="b4-400">Birth Date</mat-label>
+                        <input class="cursor-pointer" matInput [matDatepicker]="picker" placeholder="dd/MM/yyyy"
+                               formControlName="birthDate" readonly [max]="today" (click)="picker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        
+                        <mat-error *ngIf="employeeForm.controls['birthDate'].hasError('required')">
+                            Birth Date is <strong>required</strong>.
+                        </mat-error>
+                    </mat-form-field>                
+                </div>
+                <div class="w-full flex flex-row space-x-6">
+                    <mat-form-field class="w-[46%]">
+                        <mat-label class="b4-400">Basic Salary</mat-label>
+                        <input numbersOnly class="w-full b5-400" type="text" matInput placeholder="Ex. 10.000.000"
+                               [value]="formatCurrency(employeeForm.controls['basicSalary'].value)" 
+                               (input)="updateSalary($event)"
+                               formControlName="basicSalary">
+                        <mat-error *ngIf="employeeForm.controls['basicSalary']?.hasError('required')">
+                          Basic Salary is <strong>required</strong>.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-[47%]">
+                        <mat-label class="b4-400">Status</mat-label>
+                        <input class="w-full b5-400" type="text" matInput placeholder="Ex. On Leave" formControlName="status">
+                        
+                        <mat-error *ngIf="employeeForm.controls['status'].hasError('required') && employeeForm.controls['status'].touched">
+                            Status is <strong>required</strong>.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full">
+                        <mat-label class="b4-400">Group</mat-label>
+                        <mat-select class="w-full b5-400" placeholder="Select Group" formControlName="group">
+                            <mat-option class="b5-400" *ngFor="let group of groupLists" [value]="group">
+                                {{ group }}
+                            </mat-option>
+                        </mat-select>
+                    
+                        <mat-error *ngIf="employeeForm.controls['group'].hasError('required') && employeeForm.controls['group'].touched">
+                            Group is <strong>required</strong>.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full">
+                        <mat-label class="b4-400">Description</mat-label>
+                        <textarea class="w-full b5-400" matInput placeholder="Ex. Jadilah versi terbaik dari dirimu sendiri"
+                                  formControlName="description" rows="5">
+                        </textarea>
+                    
+                        <mat-error *ngIf="employeeForm.controls['description'].hasError('required') && employeeForm.controls['description'].touched">
+                            Description is <strong>required</strong>.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="w-full flex flex-row space-x-4">
+                    <button [disabled]="employeeForm.invalid" [ngClass]="employeeForm.invalid ? 'hover:bg-[#a4a4a4]' : 'hover:bg-green-600'" class="p-4 w-full rounded-md bg-green-500 text-white b5-400">Save</button>
+                    <button type="button" class="p-4 w-full rounded-md bg-red-500 hover:bg-red-600 text-white b5-400" (click)="backToHomepage(); $event.stopPropagation()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
